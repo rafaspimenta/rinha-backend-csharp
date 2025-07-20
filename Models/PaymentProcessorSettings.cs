@@ -1,0 +1,7 @@
+namespace rinha_backend_csharp.Models;
+
+public class PaymentProcessorSettings
+{
+    public string DefaultUrl { get; set; } = string.Empty;
+    public string FallbackUrl { get; set; } = string.Empty;
+}
