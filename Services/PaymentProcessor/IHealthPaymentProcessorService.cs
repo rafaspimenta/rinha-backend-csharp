@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace rinha_backend_csharp.Services;
+namespace rinha_backend_csharp.Services.PaymentProcessor;
 
 public interface IHealthPaymentProcessorService
 {

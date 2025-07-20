@@ -1,11 +1,7 @@
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using rinha_backend_csharp.Models;
 using rinha_backend_csharp.Services.Health;
 
-namespace rinha_backend_csharp.Services;
+namespace rinha_backend_csharp.Services.PaymentProcessor;
 
 public class HealthPaymentProcessorService(
     ITimeBasedHealthCheck defaultProcessor,

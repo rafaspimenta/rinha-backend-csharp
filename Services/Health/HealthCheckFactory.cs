@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
 using Microsoft.Extensions.Options;
-using rinha_backend_csharp.Models;
+using rinha_backend_csharp.Configs;
 
 namespace rinha_backend_csharp.Services.Health;
 

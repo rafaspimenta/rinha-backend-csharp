@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using rinha_backend_csharp.Configs;
 using rinha_backend_csharp.Dtos;
 using rinha_backend_csharp.Models;
 
