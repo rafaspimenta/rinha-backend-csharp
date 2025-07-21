@@ -10,17 +10,30 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: '50MB'
+          cpus: '0.6'
+          memory: '80MB'
     environment:
       - DOTNET_ENVIRONMENT=Production
     networks:
       - payment-processor
       - app-network
+    ulimits:
+      nproc: 1000000
+      nofile:
+        soft: 1000000
+        hard: 1000000
 
   api02:
     <<: *api
     hostname: api02
+    
+  api03:
+    <<: *api
+    hostname: api03
+    
+  api04:
+    <<: *api
+    hostname: api04
 
   nginx:
     image: nginx:latest
@@ -29,13 +42,15 @@ services:
     depends_on:
       - api01
       - api02
+      - api03
+      - api04
     ports:
-      - "9999:8080"
+      - "9999:9999"
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: '50MB'
+          cpus: '0.1'
+          memory: '40MB'
     networks:
       - app-network
 
@@ -53,14 +68,15 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: '200MB'
+          cpus: '0.2'
+          memory: '150MB'
     command: >
       postgres
       -c fsync=off
+      -c work_mem=64MB
       -c synchronous_commit=off
       -c wal_level=minimal
-      -c work_mem=64MB
+      -c max_wal_senders=0
     networks:
       - app-network
     healthcheck:

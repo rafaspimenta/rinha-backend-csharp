@@ -17,7 +17,9 @@ public class HealthCheckFactory(
         var healthCheck = new HttpEndpointHealthCheck(
             httpClientFactory,
             _settings.DefaultUrl + HealthEndpoint);
-        return new TimeBasedHealthCheck(healthCheck, TimeSpan.FromSeconds(5));
+        return new TimeBasedHealthCheck(
+            healthCheck, 
+            TimeSpan.FromMilliseconds(_settings.HealthCheckIntervalMilliseconds));
     }
 
     public ITimeBasedHealthCheck CreateFallbackProcessor()
@@ -25,6 +27,8 @@ public class HealthCheckFactory(
         var healthCheck = new HttpEndpointHealthCheck(
             httpClientFactory,
             _settings.FallbackUrl + HealthEndpoint);
-        return new TimeBasedHealthCheck(healthCheck, TimeSpan.FromSeconds(5));
+        return new TimeBasedHealthCheck(
+            healthCheck, 
+            TimeSpan.FromMilliseconds(_settings.HealthCheckIntervalMilliseconds));
     }
 } 

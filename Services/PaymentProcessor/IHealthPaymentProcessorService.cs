@@ -6,4 +6,6 @@ public interface IHealthPaymentProcessorService
 {
     Task<bool> IsDefaultOnlineAsync();
     Task<bool> IsFallbackOnlineAsync();
+    void UpdateDefaultHealth(bool paymentSucceeded);
+    void UpdateFallbackHealth(bool paymentSucceeded);
 } 

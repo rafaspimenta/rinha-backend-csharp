@@ -36,7 +36,7 @@ public class PaymentService(
             {
                 continue;
             }
-            
+
             var payment = new Payment
             {
                 CorrelationId = paymentRequest.CorrelationId,
@@ -45,26 +45,13 @@ public class PaymentService(
                 ProcessorType = processor.ProcessorType
             };
 
-            try
-            {
-                await repository.SavePaymentAsync(payment, token);
-                logger.LogInformation(
-                    "Payment processed successfully with {ProcessorType}", 
-                    processor.ProcessorType);
-                return;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, 
-                    "Error saving payment for correlation {CorrelationId}",
-                    paymentRequest.CorrelationId);
-            }
+            await repository.SavePaymentAsync(payment, token);
+            return;
         }
 
         logger.LogWarning(
-            "All processors failed, re-queueing payment {CorrelationId}", 
+            "All processors failed, re-queueing payment {CorrelationId}",
             paymentRequest.CorrelationId);
-        await Task.Delay(100, token);
         await queue.EnqueueAsync(paymentRequest);
     }
 }

@@ -11,4 +11,10 @@ public class HealthPaymentProcessorService(
     public Task<bool> IsDefaultOnlineAsync() => defaultProcessor.IsHealthyAsync();
     
     public Task<bool> IsFallbackOnlineAsync() => fallbackProcessor.IsHealthyAsync();
+    
+    public void UpdateDefaultHealth(bool paymentSucceeded) => 
+        defaultProcessor.UpdateFromPaymentResult(paymentSucceeded);
+        
+    public void UpdateFallbackHealth(bool paymentSucceeded) => 
+        fallbackProcessor.UpdateFromPaymentResult(paymentSucceeded);
 } 

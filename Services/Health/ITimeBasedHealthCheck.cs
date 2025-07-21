@@ -7,4 +7,5 @@ public interface ITimeBasedHealthCheck : IHealthCheck
     TimeSpan CacheDuration { get; }
     DateTime LastCheckTime { get; }
     bool LastStatus { get; }
+    void UpdateFromPaymentResult(bool paymentSucceeded);
 } 

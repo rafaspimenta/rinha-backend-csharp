@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ public class HttpEndpointHealthCheck(IHttpClientFactory httpClientFactory, strin
         try
         {
             var response = await _httpClient.GetAsync(healthCheckUrl);
-            return response.IsSuccessStatusCode;
+            return response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.TooManyRequests;
         }
         catch
         {

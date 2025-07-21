@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using rinha_backend_csharp.Configs;
 using rinha_backend_csharp.Queue;
 
 namespace rinha_backend_csharp.Services;
@@ -11,13 +13,14 @@ namespace rinha_backend_csharp.Services;
 public class PaymentWorker(
     IPaymentQueue paymentQueue,
     PaymentService paymentService,
+    IOptions<PaymentProcessorSettings> settings,
     ILogger<PaymentWorker> logger)
     : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken token)
     {
         var tasks = new List<Task>();
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < settings.Value.WorkerPoolSize; i++)
         {
             tasks.Add(Task.Run(() => ProcessPaymentAsync(token), token));
         }

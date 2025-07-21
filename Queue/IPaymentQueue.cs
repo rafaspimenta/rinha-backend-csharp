@@ -1,4 +1,3 @@
-using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using rinha_backend_csharp.Dtos;

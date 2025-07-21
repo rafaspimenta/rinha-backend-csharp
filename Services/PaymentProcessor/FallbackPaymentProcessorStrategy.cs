@@ -19,6 +19,10 @@ public class FallbackPaymentProcessorStrategy(
 
     public Task<bool> CanProcessAsync() => healthService.IsFallbackOnlineAsync();
 
-    public Task<bool> ProcessAsync(PaymentProcessorRequest request, CancellationToken token) =>
-        processorClient.ProcessPaymentAsync(request, _processorUrl, token);
+    public async Task<bool> ProcessAsync(PaymentProcessorRequest request, CancellationToken token)
+    {
+        var success = await processorClient.ProcessPaymentAsync(request, _processorUrl, token);
+        healthService.UpdateFallbackHealth(success);
+        return success;
+    }
 } 

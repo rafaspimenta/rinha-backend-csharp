@@ -5,6 +5,7 @@ PORT=8080
 # Build the AOT app and Docker image
 build:
 	docker build -t $(IMAGE_NAME):latest .
+#   docker buildx build --platform=linux/amd64 -t rinha-backend-csharp:latest .
 
 # Run the app in a local container
 run:
@@ -21,3 +22,9 @@ clean:
 push:
 	docker tag $(IMAGE_NAME):latest your-dockerhub-user/$(IMAGE_NAME):latest
 	docker push your-dockerhub-user/$(IMAGE_NAME):latest
+
+compose:
+	docker-compose -f docker-compose.yml up
+	
+down:
+	docker-compose -f docker-compose.yml down --remove-orphans

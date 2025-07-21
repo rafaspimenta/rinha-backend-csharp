@@ -2,17 +2,26 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
+# Install native AOT prerequisites
+RUN apt-get update && \
+    apt-get install -y clang zlib1g-dev && \
+    apt-get clean
+
 # Copy project files
 COPY . .
 
 # Publish the app with AOT, trimming and no debug symbols
 RUN dotnet publish -c Release -o /app
 
+# dotnet publish -c Release -r linux-x64 -o /app
+
 # Stage 2: Create minimal runtime image (distroless style)
 FROM mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
 
 # Set environment variables
 ENV DOTNET_EnableDiagnostics=0 \
+    DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION=0 \
+    DOTNET_NOLOGO=true \
     ASPNETCORE_URLS=http://+:8080 \
     DOTNET_ENVIRONMENT=Production
 

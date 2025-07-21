@@ -19,6 +19,10 @@ public class DefaultPaymentProcessorStrategy(
 
     public Task<bool> CanProcessAsync() => healthService.IsDefaultOnlineAsync();
 
-    public Task<bool> ProcessAsync(PaymentProcessorRequest request, CancellationToken token) =>
-        processorClient.ProcessPaymentAsync(request, _processorUrl, token);
+    public async Task<bool> ProcessAsync(PaymentProcessorRequest request, CancellationToken token)
+    {
+        var success = await processorClient.ProcessPaymentAsync(request, _processorUrl, token);
+        healthService.UpdateDefaultHealth(success);
+        return success;
+    }
 } 
