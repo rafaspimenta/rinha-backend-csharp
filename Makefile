@@ -15,7 +15,10 @@ rebuild: clean build run
 
 # Remove image
 clean:
-	docker rmi -f $(IMAGE_NAME):latest || true
+	docker container prune -f
+	docker image prune -f
+	docker volume prune -f
+	docker network prune -f
 
 # Push to Docker Hub (optional)
 push:
