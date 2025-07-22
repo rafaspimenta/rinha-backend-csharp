@@ -4,7 +4,7 @@ PORT=8080
 
 # Build the AOT app and Docker image
 build:
-	docker build -t $(IMAGE_NAME):latest .
+	docker build --platform linux/amd64 -t $(IMAGE_NAME):latest .
 
 # Run the app in a local container
 run:
@@ -22,6 +22,7 @@ clean:
 
 # Push to Docker Hub (optional)
 push:
+	docker build --platform linux/amd64 -t $(IMAGE_NAME):latest .
 	docker tag $(IMAGE_NAME):latest rafaspimenta/$(IMAGE_NAME):latest
 	docker push rafaspimenta/$(IMAGE_NAME):latest
 

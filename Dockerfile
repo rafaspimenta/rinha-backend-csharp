@@ -1,5 +1,5 @@
 # Stage 1: Build AOT-compiled application
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Install native AOT prerequisites
@@ -10,13 +10,11 @@ RUN apt-get update && \
 # Copy project files
 COPY . .
 
-# Publish the app with AOT, trimming and no debug symbols
-RUN dotnet publish -c Release -o /app
-
-# dotnet publish -c Release -r linux-x64 -o /app
+# Publish the app with AOT, trimming and no debug symbols for linux-x64
+RUN dotnet publish -c Release -r linux-x64 -o /app
 
 # Stage 2: Create minimal runtime image (distroless style)
-FROM mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
 
 # Set environment variables
 ENV DOTNET_EnableDiagnostics=0 \
