@@ -27,14 +27,6 @@ services:
   api02:
     <<: *api
     hostname: api02
-    
-  api03:
-    <<: *api
-    hostname: api03
-    
-  api04:
-    <<: *api
-    hostname: api04
 
   nginx:
     image: nginx:latest
@@ -43,8 +35,6 @@ services:
     depends_on:
       - api01
       - api02
-      - api03
-      - api04
     ports:
       - "9999:9999"
     deploy:
@@ -82,9 +72,9 @@ services:
       - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d rinha"]
-      interval: 2s
-      timeout: 2s
-      retries: 5
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 networks:
   app-network:
