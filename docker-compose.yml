@@ -1,6 +1,7 @@
 services:
   api01: &api
-    image: rinha-backend-csharp:latest
+    image: rafaspimenta/rinha-backend-csharp:latest
+    platform: linux/amd64
     hostname: api01
     depends_on:
       postgres:
