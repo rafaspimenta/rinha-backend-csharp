@@ -1,17 +1,10 @@
-# Name of the final Docker image
 IMAGE_NAME=rinha-backend-csharp
-PORT=8080
+TAG=$(shell git rev-parse --short HEAD 2>/dev/null || echo "latest")
+FULL_IMAGE_NAME=rafaspimenta/$(IMAGE_NAME):$(TAG)
 
 # Build the AOT app and Docker image
 build:
-	docker build --platform linux/amd64 -t $(IMAGE_NAME):latest .
-
-# Run the app in a local container
-run:
-	docker run --rm -it -p $(PORT):8080 --name $(IMAGE_NAME)-dev $(IMAGE_NAME):latest
-
-# Rebuild and restart the container
-rebuild: clean build run
+	docker build --platform linux/amd64 -t $(FULL_IMAGE_NAME) .
 
 # Remove image
 clean:
@@ -22,9 +15,9 @@ clean:
 
 # Push to Docker Hub (optional)
 push:
-	docker build --platform linux/amd64 -t $(IMAGE_NAME):latest .
-	docker tag $(IMAGE_NAME):latest rafaspimenta/$(IMAGE_NAME):latest
-	docker push rafaspimenta/$(IMAGE_NAME):latest
+	docker login
+	docker build --platform linux/amd64 -t $(FULL_IMAGE_NAME) .
+	docker push $(FULL_IMAGE_NAME)
 
 compose:
 	docker-compose -f docker-compose.yml up

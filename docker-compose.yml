@@ -1,6 +1,7 @@
 services:
   api01: &api
-    image: rafaspimenta/rinha-backend-csharp:latest
+    build:
+      context: .
     platform: linux/amd64
     hostname: api01
     depends_on:
