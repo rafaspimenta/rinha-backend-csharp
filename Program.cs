@@ -48,10 +48,18 @@ builder.Logging.Configure(options =>
 builder.Services.Configure<PaymentProcessorSettings>(builder.Configuration.GetSection("PaymentProcessor"));
 
 // Configure HTTP client with timeout
-builder.Services.AddHttpClient(Options.DefaultName, (serviceProvider, client) =>
+builder.Services.AddHttpClient("PaymentProcessor", (serviceProvider, client) =>
 {
     var settings = serviceProvider.GetRequiredService<IOptions<PaymentProcessorSettings>>().Value;
     client.Timeout = TimeSpan.FromMilliseconds(settings.HttpClientTimeoutMilliseconds);
+});
+
+// Configure dedicated HTTP client for health checks with shorter timeout
+builder.Services.AddHttpClient("HealthCheck", (serviceProvider, client) =>
+{
+    var settings = serviceProvider.GetRequiredService<IOptions<PaymentProcessorSettings>>().Value;
+    // Use a shorter timeout for health checks to make them more responsive
+    client.Timeout = TimeSpan.FromMilliseconds(settings.HealthCheckTimeoutMilliseconds);
 });
 
 builder.Services.AddSingleton<IPaymentQueue, PaymentQueue>();

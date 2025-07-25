@@ -14,7 +14,7 @@ public class HttpPaymentProcessorClient(
     ILogger<HttpPaymentProcessorClient> logger)
     : IPaymentProcessorClient
 {
-    private readonly HttpClient _httpClient = httpClientFactory.CreateClient();
+    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("PaymentProcessor");
 
     public async Task<bool> ProcessPaymentAsync(PaymentProcessorRequest request, string processorUrl, CancellationToken token)
     {

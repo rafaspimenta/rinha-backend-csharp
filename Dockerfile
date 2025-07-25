@@ -1,6 +1,9 @@
 # Stage 1: Build AOT-compiled application
-FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
+
+ARG TARGETPLATFORM
+ARG TARGETARCH
 
 # Install native AOT prerequisites
 RUN apt-get update && \
@@ -10,11 +13,16 @@ RUN apt-get update && \
 # Copy project files
 COPY . .
 
-# Publish the app with AOT, trimming and no debug symbols for linux-x64
-RUN dotnet publish -c Release -r linux-x64 -o /app
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+        RUNTIME_ID="linux-arm64"; \
+    else \
+        RUNTIME_ID="linux-x64"; \
+    fi && \
+    echo "Building for runtime: $RUNTIME_ID" && \
+    dotnet publish rinha-backend-csharp.csproj -c Release -r $RUNTIME_ID -o /app
 
 # Stage 2: Create minimal runtime image (distroless style)
-FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
+FROM --platform=$TARGETPLATFORM mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
 
 # Set environment variables
 ENV DOTNET_EnableDiagnostics=0 \

@@ -2,7 +2,7 @@ services:
   api01: &api
     build:
       context: .
-    platform: linux/amd64
+      dockerfile: Dockerfile
     hostname: api01
     depends_on:
       postgres:
@@ -12,8 +12,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.6'
-          memory: '80MB'
+          cpus: '0.5'
+          memory: '55MB'
     environment:
       - DOTNET_ENVIRONMENT=Production
     networks:
@@ -41,7 +41,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
+          cpus: '0.2'
           memory: '40MB'
     networks:
       - app-network
@@ -54,14 +54,14 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: '150MB'
+          cpus: '0.3'
+          memory: '200MB'
     command: >
       postgres
       -c fsync=off

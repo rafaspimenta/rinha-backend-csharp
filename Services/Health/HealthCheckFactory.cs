@@ -19,7 +19,8 @@ public class HealthCheckFactory(
             _settings.DefaultUrl + HealthEndpoint);
         return new TimeBasedHealthCheck(
             healthCheck, 
-            TimeSpan.FromMilliseconds(_settings.HealthCheckIntervalMilliseconds));
+            TimeSpan.FromMilliseconds(_settings.HealthCheckIntervalMilliseconds),
+            TimeSpan.FromMilliseconds(_settings.FaultHealthCheckIntervalMilliseconds));
     }
 
     public ITimeBasedHealthCheck CreateFallbackProcessor()
@@ -29,6 +30,7 @@ public class HealthCheckFactory(
             _settings.FallbackUrl + HealthEndpoint);
         return new TimeBasedHealthCheck(
             healthCheck, 
-            TimeSpan.FromMilliseconds(_settings.HealthCheckIntervalMilliseconds));
+            TimeSpan.FromMilliseconds(_settings.HealthCheckIntervalMilliseconds),
+            TimeSpan.FromMilliseconds(_settings.FaultHealthCheckIntervalMilliseconds));
     }
 } 

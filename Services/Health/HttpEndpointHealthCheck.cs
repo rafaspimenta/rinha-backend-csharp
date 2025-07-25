@@ -7,7 +7,7 @@ namespace rinha_backend_csharp.Services.Health;
 public class HttpEndpointHealthCheck(IHttpClientFactory httpClientFactory, string healthCheckUrl)
     : IHealthCheck
 {
-    private readonly HttpClient _httpClient = httpClientFactory.CreateClient();
+    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("HealthCheck");
 
     public async Task<bool> IsHealthyAsync()
     {
