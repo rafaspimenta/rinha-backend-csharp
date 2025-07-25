@@ -1,5 +1,5 @@
 # Stage 1: Build AOT-compiled application
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM --platform=$TARGETPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 ARG TARGETPLATFORM

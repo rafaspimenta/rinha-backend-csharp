@@ -2,6 +2,8 @@
 
 # Project configuration
 PROJECT_NAME ?= rinha-backend-csharp
+DOCKER_HUB_USER ?= rafaspimenta
+IMAGE_TAG ?= $(DOCKER_HUB_USER)/$(PROJECT_NAME):prod
 
 .PHONY: help build-local build-prod push-prod clean dev
 
@@ -18,11 +20,11 @@ help:
 
 # Production build (AMD64 only - for deployment)
 build-prod:
-	docker build --platform linux/amd64 --tag $(PROJECT_NAME):prod .
+	docker build --platform linux/amd64 --tag $(IMAGE_TAG) .
 
 # Push production AMD64 image
 push-prod: build-prod
-	docker push $(PROJECT_NAME):prod
+	docker push $(IMAGE_TAG)
 
 # Development with local ARM64 build
 dev:
