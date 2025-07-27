@@ -8,7 +8,6 @@ using rinha_backend_csharp.Models;
 namespace rinha_backend_csharp.Services.PaymentProcessor;
 
 public class FallbackPaymentProcessorStrategy(
-    IHealthPaymentProcessorService healthService,
     IPaymentProcessorClient processorClient,
     IOptions<PaymentProcessorSettings> settings)
     : IPaymentProcessorStrategy
@@ -17,12 +16,11 @@ public class FallbackPaymentProcessorStrategy(
 
     public ProcessorType ProcessorType => ProcessorType.Fallback;
 
-    public Task<bool> CanProcessAsync() => healthService.IsFallbackOnlineAsync();
+    public Task<bool> CanProcessAsync() => Task.FromResult(true); // future optimization checking the health endpoint
 
     public async Task<bool> ProcessAsync(PaymentProcessorRequest request, CancellationToken token)
     {
         var success = await processorClient.ProcessPaymentAsync(request, _processorUrl, token);
-        healthService.UpdateFallbackHealth(success);
         return success;
     }
 } 

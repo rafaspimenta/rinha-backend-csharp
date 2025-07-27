@@ -9,8 +9,8 @@ public class PaymentQueue : IPaymentQueue
     private readonly Channel<PaymentRequest> _channel = Channel.CreateUnbounded<PaymentRequest>(
         new UnboundedChannelOptions
         {
-            SingleReader = false,
-            SingleWriter = false
+            SingleReader = true,  // Only one PaymentWorker reads
+            SingleWriter = false  // Multiple HTTP endpoints can write concurrently
         });
 
     public ValueTask EnqueueAsync(PaymentRequest paymentRequest)

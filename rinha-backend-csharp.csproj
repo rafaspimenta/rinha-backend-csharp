@@ -8,20 +8,10 @@
         <PublishTrimmed>true</PublishTrimmed>
         <StripSymbols>true</StripSymbols>
         <PublishAot>true</PublishAot>
-        <RuntimeIdentifiers>linux-x64;linux-arm64</RuntimeIdentifiers>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Npgsql" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.7" />
     </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="app\app\appsettings.json" />
-      <_ContentIncludedByDefault Remove="app\app\appsettings.Production.json" />
-      <_ContentIncludedByDefault Remove="app\app\rinha-backend-csharp.staticwebassets.endpoints.json" />
-      <_ContentIncludedByDefault Remove="app\appsettings.json" />
-      <_ContentIncludedByDefault Remove="app\appsettings.Production.json" />
-      <_ContentIncludedByDefault Remove="app\rinha-backend-csharp.staticwebassets.endpoints.json" />
-    </ItemGroup>
-
 </Project>
