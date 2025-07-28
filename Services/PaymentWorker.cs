@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using rinha_backend_csharp.Configs;
 using rinha_backend_csharp.Dtos;
-using rinha_backend_csharp.Queue;
+using rinha_backend_csharp.Services.Queue;
 
 namespace rinha_backend_csharp.Services;
 

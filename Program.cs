@@ -9,10 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using rinha_backend_csharp.Configs;
 using rinha_backend_csharp.Dtos;
-using rinha_backend_csharp.Queue;
 using rinha_backend_csharp.Repositories;
 using rinha_backend_csharp.Services;
 using rinha_backend_csharp.Services.PaymentProcessor;
+using rinha_backend_csharp.Services.Queue;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
