@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using rinha_backend_csharp.Dtos;
-using rinha_backend_csharp.Models;
+using rinha_backend_csharp.Repositories.Models;
 
 namespace rinha_backend_csharp.Repositories;
 

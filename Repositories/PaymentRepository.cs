@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using rinha_backend_csharp.Dtos;
-using rinha_backend_csharp.Models;
+using rinha_backend_csharp.Repositories.Models;
 
 namespace rinha_backend_csharp.Repositories;
 

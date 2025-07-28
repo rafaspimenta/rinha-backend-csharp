@@ -1,6 +1,6 @@
 using System;
 
-namespace rinha_backend_csharp.Models;
+namespace rinha_backend_csharp.Repositories.Models;
 
 public class Payment
 {
