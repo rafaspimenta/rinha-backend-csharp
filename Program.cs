@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Polly;
-using Polly.Extensions.Http;
 using rinha_backend_csharp.Configs;
 using rinha_backend_csharp.Dtos;
 using rinha_backend_csharp.Queue;
@@ -41,33 +38,14 @@ builder.Services.Configure<RouteOptions>(options =>
 });
 
 // Optimize logging for production (minimize allocations)
-builder.Logging.Configure(options => { options.ActivityTrackingOptions = ActivityTrackingOptions.None; });
+builder.Logging.Configure(options => 
+{ 
+    options.ActivityTrackingOptions = ActivityTrackingOptions.None; 
+});
 
 builder.Services.Configure<PaymentProcessorSettings>(builder.Configuration.GetSection("PaymentProcessor"));
 
-
-
-// Configure HTTP client with timeout and retry policy
-builder.Services.AddHttpClient("PaymentProcessor", (serviceProvider, client) =>
-    {
-        var settings = serviceProvider.GetRequiredService<IOptions<PaymentProcessorSettings>>().Value;
-        client.Timeout = TimeSpan.FromMilliseconds(settings.HttpClientTimeoutMilliseconds);
-    })
-    .AddPolicyHandler((serviceProvider, _) =>
-    {
-        var settings = serviceProvider.GetRequiredService<IOptions<PaymentProcessorSettings>>().Value;
-
-        var retryPolicy = HttpPolicyExtensions
-            .HandleTransientHttpError()
-            .OrResult(msg => !msg.IsSuccessStatusCode)
-            .WaitAndRetryAsync(
-                settings.RetryCount,
-                _ =>
-                    TimeSpan.FromMilliseconds(settings.RetryJitterMilliseconds) +
-                    TimeSpan.FromMilliseconds(new Random().Next(0, settings.RetryJitterMilliseconds)));
-        return retryPolicy;
-    });
-
+builder.Services.AddPaymentProcessorHttpClient();
 builder.Services.AddSingleton<IPaymentQueue, PaymentQueue>();
 builder.Services.AddSingleton<IPaymentProcessorClient, HttpPaymentProcessorClient>();
 builder.Services.AddSingleton<IPaymentRepository, PaymentRepository>();

@@ -14,22 +14,24 @@ help:
 	@echo "  build-prod      - Build for production AMD64 deployment"
 	@echo "  push-prod       - Build and push production AMD64 image"
 	@echo "  dev             - Build local ARM64 and start development environment"
+	@echo "  prod            - Start production environment (Docker Hub images)"
 	@echo "  clean           - Clean up containers and images"
 	@echo ""
 	@echo "Project: $(PROJECT_NAME)"
 
-# Production build (AMD64 only - for deployment)
-build-prod:
-	docker build --platform linux/amd64 --tag $(IMAGE_TAG) .
-
-# Push production AMD64 image
-push-prod: build-prod
-	docker push $(IMAGE_TAG)
-
-# Development with local ARM64 build
+# Development (ARM only - for local development)
 dev:
 	DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose build
 	docker compose up -d
+
+# Production deployment (builds and runs with AMD64 platform)
+prod:
+	DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose build
+	docker compose up -d
+
+# Push production AMD64 image
+prod-push: docker build --platform linux/amd64 --tag $(IMAGE_TAG) .
+	docker push $(IMAGE_TAG)
 
 # Clean up - Stop and remove all containers and volumes
 clean:

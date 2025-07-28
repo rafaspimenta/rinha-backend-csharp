@@ -1,6 +1,8 @@
 services:
   api01: &api
-    image: rafaspimenta/rinha-backend-csharp:prod_v1
+    build:
+      context: .
+      dockerfile: Dockerfile
     hostname: api01
     depends_on:
       postgres:
