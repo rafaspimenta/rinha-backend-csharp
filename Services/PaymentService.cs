@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using rinha_backend_csharp.Dtos;
 using rinha_backend_csharp.Repositories;
 using rinha_backend_csharp.Repositories.Models;
@@ -14,8 +13,7 @@ namespace rinha_backend_csharp.Services;
 public class PaymentService(
     IEnumerable<IPaymentProcessorStrategy> processors,
     IPaymentRepository repository,
-    IPaymentQueue queue,
-    ILogger<PaymentService> logger)
+    IPaymentQueue queue)
 {
     public async Task ProcessPaymentAsync(PaymentRequest paymentRequest, CancellationToken token)
     {
@@ -48,10 +46,6 @@ public class PaymentService(
             await repository.SavePaymentAsync(payment, token);
             return;
         }
-
-        logger.LogWarning(
-            "All processors failed, re-queueing payment {CorrelationId}",
-            paymentRequest.CorrelationId);
         await queue.EnqueueAsync(paymentRequest);
     }
 }

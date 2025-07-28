@@ -19,8 +19,8 @@ var builder = WebApplication.CreateSlimBuilder(args);
 // Configure Kestrel for high-volume requests
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
-    options.Limits.MaxConcurrentConnections = 2000;
-    options.Limits.MaxConcurrentUpgradedConnections = 2000;
+    options.Limits.MaxConcurrentConnections = 1000;
+    options.Limits.MaxConcurrentUpgradedConnections = 1000;
     options.Limits.RequestHeadersTimeout = TimeSpan.FromSeconds(120);
     options.Limits.KeepAliveTimeout = TimeSpan.FromSeconds(120);
     options.AllowSynchronousIO = false; // Keep async-only for better performance
@@ -52,7 +52,10 @@ builder.Services.AddSingleton<IPaymentRepository, PaymentRepository>();
 builder.Services.AddSingleton<IPaymentProcessorStrategy, DefaultPaymentProcessorStrategy>();
 builder.Services.AddSingleton<IPaymentProcessorStrategy, FallbackPaymentProcessorStrategy>();
 builder.Services.AddSingleton<PaymentService>();
+builder.Services.AddHostedService<DatabaseWarmupService>();
 builder.Services.AddHostedService<PaymentWorker>();
+
+builder.Logging.ClearProviders();
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {

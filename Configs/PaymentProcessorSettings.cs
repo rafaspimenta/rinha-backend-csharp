@@ -4,7 +4,6 @@ public class PaymentProcessorSettings
 {
     public string DefaultUrl { get; set; } = string.Empty;
     public string FallbackUrl { get; set; } = string.Empty;
-    public int MaxConcurrentPayments { get; set; } = 1;
     public int HttpClientTimeoutMilliseconds { get; set; } = 60_000;
     public int RetryCount { get; set; } = 10;
     public int RetryJitterMilliseconds { get; set; } = 1000;

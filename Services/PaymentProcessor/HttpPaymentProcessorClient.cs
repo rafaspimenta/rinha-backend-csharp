@@ -1,17 +1,14 @@
-using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using rinha_backend_csharp.Configs;
 using rinha_backend_csharp.Dtos;
 
 namespace rinha_backend_csharp.Services.PaymentProcessor;
 
 public class HttpPaymentProcessorClient(
-    IHttpClientFactory httpClientFactory,
-    ILogger<HttpPaymentProcessorClient> logger)
+    IHttpClientFactory httpClientFactory)
     : IPaymentProcessorClient
 {
     private readonly HttpClient _httpClient = httpClientFactory.CreateClient("PaymentProcessor");
@@ -28,9 +25,8 @@ public class HttpPaymentProcessorClient(
 
             return result.IsSuccessStatusCode;
         }
-        catch (Exception ex)
+        catch
         {
-            logger.LogError(ex, "Error processing payment through {ProcessorUrl}", processorUrl);
             return false;
         }
     }

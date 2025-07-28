@@ -1,5 +1,5 @@
 # Stage 1: Build AOT-compiled application
-FROM --platform=$TARGETPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 ARG TARGETPLATFORM
@@ -22,7 +22,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
     dotnet publish rinha-backend-csharp.csproj -c Release -r $RUNTIME_ID -o /app
 
 # Stage 2: Create minimal runtime image (distroless style)
-FROM --platform=$TARGETPLATFORM mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
+FROM mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
 
 # Set environment variables
 ENV DOTNET_EnableDiagnostics=0 \
