@@ -9,38 +9,4 @@ git push origin main
 
 k6 run -e MAX_REQUESTS=550 rinha.js
 
-
-Option 1: Conservative Optimization (Recommended)
-yaml
-# Redistribute unused resources to where they might be needed
-api01 & api02:
-  cpus: '0.65'     # +0.05 each for peak load handling
-  memory: '90MB'   # -10MB each (still 2.5x current usage)
-
-postgres:
-  cpus: '0.15'     # -0.05 (currently using only 3.5%)
-  memory: '120MB'  # +20MB for better caching/buffers
-
-nginx:
-  cpus: '0.05'     # -0.05 (currently using only 2.4%)
-  memory: '50MB'   # Keep same (adequate for current usage)
-
-Total: 1.5 CPU, 350MB (within constraints)
-
-
-Option 2: Aggressive Optimization
-yaml
-# Maximize efficiency based on actual usage patterns
-api01 & api02:
-  cpus: '0.7'      # More CPU for potential spikes
-  memory: '80MB'   # Still 2.3x current usage
-
-postgres:
-  cpus: '0.05'     # Minimal (very efficient)
-  memory: '150MB'  # More memory for database operations
-
-nginx:
-  cpus: '0.05'     # Minimal (extremely efficient)
-  memory: '40MB'   # Reduce slightly
-
-Total: 1.5 CPU, 350MB
+./monitor-docker-stats.sh 1

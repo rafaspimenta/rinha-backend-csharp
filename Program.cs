@@ -45,6 +45,8 @@ builder.Logging.Configure(options => { options.ActivityTrackingOptions = Activit
 
 builder.Services.Configure<PaymentProcessorSettings>(builder.Configuration.GetSection("PaymentProcessor"));
 
+
+
 // Configure HTTP client with timeout and retry policy
 builder.Services.AddHttpClient("PaymentProcessor", (serviceProvider, client) =>
     {
