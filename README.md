@@ -1,5 +1,8 @@
 # Rinha Backend - C# Payment Processing API
 
+[![Latest tag](https://img.shields.io/github/v/tag/rafaspimenta/rinha-backend-csharp?sort=semver&label=latest%20tag)](https://github.com/rafaspimenta/rinha-backend-csharp/tags)
+[![CI](https://github.com/rafaspimenta/rinha-backend-csharp/actions/workflows/on-push-to-main.yml/badge.svg?branch=main)](https://github.com/rafaspimenta/rinha-backend-csharp/actions/workflows/on-push-to-main.yml)
+
 A high-performance payment processing backend built with .NET 9 and optimized for the [Rinha de Backend](https://github.com/zanfranceschi/rinha-de-backend-2025) challenge. This system provides blazing-fast payment processing with queue management, health checks, and fault tolerance.
 
 ## 🚀 Features
