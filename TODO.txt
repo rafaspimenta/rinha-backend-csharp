@@ -1,5 +1,0 @@
-git fetch upstream
-git merge upstream/main
-git push origin main
-
-k6 run -e MAX_REQUESTS=550 rinha.js

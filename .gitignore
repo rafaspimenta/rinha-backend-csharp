@@ -6,5 +6,5 @@ riderModule.iml
 /.idea/
 *.DotSettings.user
 .DS_Store
-TODO.md
+/TODO.txt
 /app/
