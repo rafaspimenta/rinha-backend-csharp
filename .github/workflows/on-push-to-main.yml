@@ -24,6 +24,8 @@ jobs:
         with:
           token: ${{ github.token }}
           branch: main
+          noVersionBumpBehavior: current
+          fallbackTag: v1.0.0
           
       - name: Create tag
         if: steps.semver.outputs.nextStrict != ''
