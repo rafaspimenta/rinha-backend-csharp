@@ -22,10 +22,10 @@ jobs:
         id: semver
         uses: ietf-tools/semver-action@v1
         with:
-          token: ${{ github.token }}
-          branch: main
-          noVersionBumpBehavior: current
-          fallbackTag: v1.0.0
+          tag_prefix: "v"
+          major_pattern: "(BREAKING CHANGE|feat!)"
+          minor_pattern: "feat:"
+          version_format: "${major}.${minor}.${patch}"
           
       - name: Create tag
         if: steps.semver.outputs.nextStrict != ''
