@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using rinha_backend_csharp.Dtos;
 using rinha_backend_csharp.Services.Queue;
 
 namespace rinha_backend_csharp.Services;
@@ -15,12 +14,7 @@ public class PaymentWorker(
     {
         await foreach (var paymentRequest in paymentQueue.Reader.ReadAllAsync(token))
         {
-            await ProcessPaymentAsync(paymentRequest, token);
+            await paymentService.ProcessPaymentAsync(paymentRequest, token);
         }
-    }
-
-    private async Task ProcessPaymentAsync(PaymentRequest paymentRequest, CancellationToken token)
-    {
-        await paymentService.ProcessPaymentAsync(paymentRequest, token);
     }
 }

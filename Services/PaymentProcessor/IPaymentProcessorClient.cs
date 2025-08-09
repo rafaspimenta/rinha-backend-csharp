@@ -6,5 +6,5 @@ namespace rinha_backend_csharp.Services.PaymentProcessor;
 
 public interface IPaymentProcessorClient
 {
-    Task<bool> ProcessPaymentAsync(PaymentProcessorRequest request, string processorUrl, CancellationToken token);
+    Task<bool> ProcessPaymentAsync(PaymentProcessorRequest request, string baseUrl, CancellationToken token);
 } 

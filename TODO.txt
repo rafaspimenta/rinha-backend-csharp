@@ -1,8 +1,3 @@
--- btree : good for between queries 
--- readme : review
--- makefile: review
--- README.md: review
-
 git fetch upstream
 git merge upstream/main
 git push origin main

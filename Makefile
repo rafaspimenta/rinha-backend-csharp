@@ -3,7 +3,7 @@
 # Project configuration
 PROJECT_NAME ?= rinha-backend-csharp
 DOCKER_HUB_USER ?= rafaspimenta
-IMAGE_TAG ?= $(DOCKER_HUB_USER)/$(PROJECT_NAME):prod_v1
+IMAGE_TAG ?= $(DOCKER_HUB_USER)/$(PROJECT_NAME):prod_v3
 
 .PHONY: dev prod prod-push clean
 

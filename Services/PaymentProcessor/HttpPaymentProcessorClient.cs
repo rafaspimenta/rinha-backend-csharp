@@ -13,12 +13,12 @@ public class HttpPaymentProcessorClient(
 {
     private readonly HttpClient _httpClient = httpClientFactory.CreateClient("PaymentProcessor");
 
-    public async Task<bool> ProcessPaymentAsync(PaymentProcessorRequest request, string processorUrl, CancellationToken token)
+    public async Task<bool> ProcessPaymentAsync(PaymentProcessorRequest request, string baseUrl, CancellationToken token)
     {
         try
         {
             var result = await _httpClient.PostAsJsonAsync(
-                processorUrl + "/payments",
+                baseUrl + "/payments",
                 request,
                 AppJsonSerializerContext.Default.PaymentProcessorRequest,
                 token);
