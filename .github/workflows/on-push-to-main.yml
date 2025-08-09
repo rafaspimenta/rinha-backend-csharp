@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      version: ${{ steps.semver.outputs.nextStrict }}
+      version: v${{ steps.semver.outputs.version }}
       
     steps:
       - name: Checkout
@@ -20,20 +20,20 @@ jobs:
 
       - name: Get next version
         id: semver
-        uses: ietf-tools/semver-action@v1
+        uses: paulhatch/semantic-version@v5.4.0
         with:
           tag_prefix: "v"
-          major_pattern: "(BREAKING CHANGE|feat!)"
+          major_pattern: "BREAKING CHANGE|feat!"
           minor_pattern: "feat:"
-          version_format: "${major}.${minor}.${patch}"
+          format: "${major}.${minor}.${patch}"
           
       - name: Create tag
-        if: steps.semver.outputs.nextStrict != ''
+        if: steps.semver.outputs.version != ''
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-          git tag ${{ steps.semver.outputs.nextStrict }}
-          git push origin ${{ steps.semver.outputs.nextStrict }}
+          git tag v${{ steps.semver.outputs.version }}
+          git push origin v${{ steps.semver.outputs.version }}
 
   deploy:
     runs-on: ubuntu-latest
