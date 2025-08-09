@@ -25,7 +25,7 @@ jobs:
           tag_prefix: "v"
           major_pattern: "BREAKING CHANGE|feat!"
           minor_pattern: "feat:"
-          format: "${major}.${minor}.${patch}"
+          version_format: "${major}.${minor}.${patch}"
           
       - name: Create tag
         if: steps.semver.outputs.version != ''
@@ -54,7 +54,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platform: linux/amd64
+          platforms: linux/amd64
           push: true
           tags: |
             rafaspimenta/rinha-backend-csharp:${{ needs.build.outputs.version }}
