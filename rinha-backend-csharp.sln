@@ -1,6 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rinha-backend-csharp", "rinha-backend-csharp.csproj", "{A904DC50-FB64-4B7D-A000-CDA6714113E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rinha-backend-csharp", "src/rinha-backend-csharp.csproj", "{A904DC50-FB64-4B7D-A000-CDA6714113E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{F71D9499-217A-4887-9FBA-8412C03854F5}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		init.sql = init.sql
+		Makefile = Makefile
+		nginx.conf = nginx.conf
+		README.md = README.md
+		TODO.txt = TODO.txt
+		.github\workflows\on-push-to-main.yml = .github\workflows\on-push-to-main.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

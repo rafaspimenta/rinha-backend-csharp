@@ -19,7 +19,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
         RUNTIME_ID="linux-x64"; \
     fi && \
     echo "Building for runtime: $RUNTIME_ID" && \
-    dotnet publish rinha-backend-csharp.csproj -c Release -r $RUNTIME_ID -o /app
+    dotnet publish src/rinha-backend-csharp.csproj -c Release -r $RUNTIME_ID -o /app
 
 # Stage 2: Create minimal runtime image (distroless style)
 FROM mcr.microsoft.com/dotnet/runtime-deps:9.0 AS runtime
