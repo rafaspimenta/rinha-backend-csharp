@@ -41,11 +41,11 @@ if (builder.Environment.IsProduction())
 
 var app = builder.Build();
 
-app.MapPost("/payments", async (
+app.MapPost("/payments", (
     [FromBody] PaymentRequest request,
     [FromServices] IPaymentQueue queue) =>
 {
-    await queue.EnqueueAsync(request);
+    _ = queue.EnqueueAsync(request);
     return Results.Accepted();
 });
 
