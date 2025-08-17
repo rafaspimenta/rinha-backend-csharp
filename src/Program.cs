@@ -41,7 +41,7 @@ if (builder.Environment.IsProduction())
 
 var app = builder.Build();
 
-app.MapPost("/payments", (
+app.MapPost("/payments", async (
     [FromBody] PaymentRequest request,
     [FromServices] IPaymentQueue queue) =>
 {
