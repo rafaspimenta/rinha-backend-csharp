@@ -45,7 +45,7 @@ app.MapPost("/payments", (
     [FromBody] PaymentRequest request,
     [FromServices] IPaymentQueue queue) =>
 {
-    _ = queue.EnqueueAsync(request);
+    await queue.EnqueueAsync(request);
     return Results.Accepted();
 });
 
