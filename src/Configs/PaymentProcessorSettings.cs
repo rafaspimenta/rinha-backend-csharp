@@ -7,4 +7,5 @@ public class PaymentProcessorSettings
     public int HttpClientTimeoutMilliseconds { get; set; } = 60_000;
     public int RetryCount { get; set; } = 10;
     public int RetryJitterMilliseconds { get; set; } = 1000;
+    public int MaxConcurrentPayments { get; set; }
 }
